@@ -3,8 +3,13 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
+import axios from 'axios'
 
 import './assets/main.css'
+
+axios.defaults.baseURL = 'http://localhost:8000/api/';
+axios.defaults.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
+
 
 const app = createApp(App)
 
