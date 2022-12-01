@@ -5,6 +5,7 @@
  use App\Http\Controllers\Controller;
  use Illuminate\Http\Request;
  use App\Models\User;
+ use Illuminate\Http\Response;
 
  class PassportAuthController extends Controller {
     /**
@@ -12,10 +13,10 @@
     */
     public function register(Request $request) {
          $this->validate($request, [
-             'name' => 'required|min:4',
-             'email' => 'required|email',
-             'password' => 'required|min:8',
-         ]);
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => ['required'],
+        ]);
 
          try {
             $user = User::create([
@@ -25,7 +26,10 @@
             ]);
 
             $token = $user->createToken('Laravel9PassportAuth')->accessToken;
-            return response()->json(['token' => $token], 200);
+            return response([
+                'user' => $user,
+                'access_token' => $token
+            ], Response::HTTP_CREATED);
 
         } catch(\Illuminate\Database\QueryException $e){
             $errorCode = $e->errorInfo[1];
@@ -48,9 +52,18 @@
    
         if (auth()->attempt($data)) {
             $token = auth()->user()->createToken('Laravel9PassportAuth')->accessToken;
-            return response()->json(['token' => $token], 200);
+            // return response()->json(['token' => $token], 200);
+
+            return response([
+                'user' => auth()->user(),
+                'access_token' => $token
+            ], Response::HTTP_OK);
+
         } else {
-            return response()->json(['error' => 'Unauthorised'], 401);
+            // return response()->json(['error' => 'Unauthorised'], 401);
+            return response([
+                'message' => 'This User does not exist'
+            ], Response::HTTP_UNAUTHORIZED);
         }
     }
     
