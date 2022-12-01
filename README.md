@@ -1,3 +1,5 @@
+<p align="center"><a href="https://techvblogs.com/blog/how-to-install-vue-3-in-laravel-9-with-vite" target="_blank">How To Install Vue 3 in Laravel 9 with Vite</a></p>
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
